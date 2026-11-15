@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบประเมินความพึงพอใจการประชุมผู้ปกครอง - โรงเรียนบรรหารแจ่มใสวิทยา 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #fefce8;
+            color: #18181b;
+        }
+        .rating-radio:checked + label {
+            background-color: #facc15;
+            color: #18181b;
+            border-color: #eab308;
+            font-weight: 700;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35);
+        }
+        .choice-radio:checked + label {
+            border-color: #eab308;
+            background-color: #fef9c3;
+            color: #854d0e;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(234, 179, 8, 0.15);
+        }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-amber-50/80 via-yellow-50/40 to-stone-100">
+
+    <div class="max-w-3xl mx-auto">
+        <!-- Header Card -->
+        <div class="bg-white border-t-8 border-yellow-400 rounded-2xl shadow-md p-6 sm:p-8 mb-6 border border-amber-100">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="bg-amber-100 text-amber-900 border border-amber-300 text-xs sm:text-sm font-semibold px-3.5 py-1 rounded-full">
+                    🏫 โรงเรียนบรรหารแจ่มใสวิทยา 1
+                </span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-zinc-900 leading-snug mb-4">
+                แบบประเมินความพึงพอใจการประชุมผู้ปกครอง ภาคเรียนที่ 1 ปีการศึกษา 2569
+            </h1>
+            <p class="text-zinc-700 text-sm sm:text-base leading-relaxed bg-amber-50/70 p-4 rounded-xl border border-amber-200/80">
+                <strong class="text-amber-800">คำชี้แจง:</strong> แบบประเมินนี้จัดทำขึ้นเพื่อนำข้อมูลไปใช้ในการปรับปรุงและพัฒนาการจัดกิจกรรมการประชุมผู้ปกครองในภาคเรียนถัดไป ขอความร่วมมือท่านโปรดเลือกคำตอบที่ตรงกับความคิดเห็นของท่านมากที่สุด
+            </p>
+        </div>
+
+        <!-- Form Start -->
+        <form id="evaluationForm" class="space-y-6">
+            
+            <!-- ส่วนที่ 1: ข้อมูลทั่วไป -->
+            <div class="bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-amber-100">
+                <h2 class="text-xl font-bold text-zinc-900 mb-6 flex items-center gap-2.5 border-b border-amber-100 pb-3">
+                    <span class="bg-yellow-400 text-zinc-900 w-8 h-8 rounded-lg flex items-center justify-center text-base font-bold shadow-xs">1</span>
+                    ข้อมูลทั่วไป
+                </h2>
+
+                <!-- ข้อ 1: สถานภาพ -->
+                <div class="mb-6">
+                    <label class="block text-base font-semibold text-zinc-800 mb-3">
+                        1. สถานภาพของท่าน <span class="text-red-600">*</span>
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <input type="radio" name="status" id="status_parent" value="บิดา-มารดา" class="hidden choice-radio" required onchange="toggleOtherInput(false)">
+                            <label for="status_parent" class="block w-full p-3.5 rounded-xl border border-zinc-200 bg-zinc-50/70 text-zinc-700 cursor-pointer transition-all hover:border-yellow-400 hover:bg-amber-50/40 text-center sm:text-left">
+                                บิดา-มารดา
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" name="status" id="status_other" value="ผู้ปกครองอื่นๆ" class="hidden choice-radio" required onchange="toggleOtherInput(true)">
+                            <label for="status_other" class="block w-full p-3.5 rounded-xl border border-zinc-200 bg-zinc-50/70 text-zinc-700 cursor-pointer transition-all hover:border-yellow-400 hover:bg-amber-50/40 text-center sm:text-left">
+                                ผู้ปกครองอื่นๆ (ระบุ)
+                            </label>
+                        </div>
+                    </div>
+                    <div id="otherStatusContainer" class="hidden mt-3">
+                        <input type="text" id="otherStatusInput" placeholder="โปรดระบุความสัมพันธ์กับนักเรียน (เช่น ปู่, ย่า, ตา, ยาย, พี่, น้า)..." 
+                            class="w-full bg-white border-2 border-yellow-400 rounded-xl px-4 py-3 text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/50">
+                    </div>
+                </div>
+
+                <!-- ข้อ 2: ระดับชั้น -->
+                <div>
+                    <label class="block text-base font-semibold text-zinc-800 mb-3">
+                        2. ระดับชั้นของนักเรียนที่ท่านปกครอง <span class="text-red-600">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div>
+                            <input type="radio" name="grade" id="m1" value="มัธยมศึกษาปีที่ 1" class="hidden choice-radio" required>
+                            <label for="m1" class="block text-center p-3 rounded-xl border border-zinc-200 bg-zinc-50/70 text-zinc-700 cursor-pointer transition-all hover:border-yellow-400 hover:bg-amber-50/40">มัธยมศึกษาปีที่ 1</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="grade" id="m2" value="มัธยมศึกษาปีที่ 2" class="hidden choice-radio">
+                            <label for="m2" class="block text-center p-3 rounded-xl border border-zinc-200 bg-zinc-50/70 text-zinc-700 cursor-pointer transition-all hover:border-yellow-400 hover:bg-amber-50/40">มัธยมศึกษาปีที่ 2</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="grade" id="m3" value="มัธยมศึกษาปีที่ 3" class="hidden choice-radio">
+                            <label for="m3" class="block text-center p-3 rounded-xl border border-zinc-200 bg-zinc-50/70 text-zinc-700 cursor-pointer transition-all hover:border-yellow-400 hover:bg-amber-50/40">มัธยมศึกษาปีที่ 3</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="grade" id="m4" value="มัธยมศึกษาปีที่ 4" class="hidden choice-radio">
+                            <label for="m4" class="block text-center p-3 rounded-xl border border-zinc-200 bg-zinc-50/70 text-zinc-700 cursor-pointer transition-all hover:border-yellow-400 hover:bg-amber-50/40">มัธยมศึกษาปีที่ 4</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="grade" id="m5" value="มัธยมศึกษาปีที่ 5" class="hidden choice-radio">
+                            <label for="m5" class="block text-center p-3 rounded-xl border border-zinc-200 bg-zinc-50/70 text-zinc-700 cursor-pointer transition-all hover:border-yellow-400 hover:bg-amber-50/40">มัธยมศึกษาปีที่ 5</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="grade" id="m6" value="มัธยมศึกษาปีที่ 6" class="hidden choice-radio">
+                            <label for="m6" class="block text-center p-3 rounded-xl border border-zinc-200 bg-zinc-50/70 text-zinc-700 cursor-pointer transition-all hover:border-yellow-400 hover:bg-amber-50/40">มัธยมศึกษาปีที่ 6</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ส่วนที่ 2: ความพึงพอใจ -->
+            <div class="bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-amber-100">
+                <h2 class="text-xl font-bold text-zinc-900 mb-3 flex items-center gap-2.5">
+                    <span class="bg-yellow-400 text-zinc-900 w-8 h-8 rounded-lg flex items-center justify-center text-base font-bold shadow-xs">2</span>
+                    ความพึงพอใจต่อการจัดประชุมผู้ปกครอง
+                </h2>
+                
+                <!-- เกณฑ์คะแนน -->
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 mb-6 text-xs sm:text-sm text-zinc-700 flex flex-wrap justify-between gap-2 font-medium">
+                    <span><strong class="text-amber-800 bg-yellow-300/70 px-1.5 py-0.5 rounded">5</strong> = มากที่สุด</span>
+                    <span><strong class="text-amber-800 bg-yellow-300/70 px-1.5 py-0.5 rounded">4</strong> = มาก</span>
+                    <span><strong class="text-amber-800 bg-yellow-300/70 px-1.5 py-0.5 rounded">3</strong> = ปานกลาง</span>
+                    <span><strong class="text-amber-800 bg-yellow-300/70 px-1.5 py-0.5 rounded">2</strong> = น้อย</span>
+                    <span><strong class="text-amber-800 bg-yellow-300/70 px-1.5 py-0.5 rounded">1</strong> = น้อยที่สุด</span>
+                </div>
+
+                <!-- Container สำหรับสร้างข้อคำถามอัตโนมัติ -->
+                <div id="questionsContainer" class="space-y-6"></div>
+            </div>
+
+            <!-- ส่วนที่ 3: ข้อเสนอแนะเพิ่มเติม -->
+            <div class="bg-white rounded-2xl shadow-md p-6 sm:p-8 border border-amber-100">
+                <h2 class="text-xl font-bold text-zinc-900 mb-6 flex items-center gap-2.5 border-b border-amber-100 pb-3">
+                    <span class="bg-yellow-400 text-zinc-900 w-8 h-8 rounded-lg flex items-center justify-center text-base font-bold shadow-xs">3</span>
+                    ข้อเสนอแนะเพิ่มเติม
+                </h2>
+
+                <div class="space-y-5">
+                    <div>
+                        <label for="impression" class="block text-base font-semibold text-zinc-800 mb-2">
+                            1. สิ่งที่ท่านประทับใจมากที่สุดในการประชุมครั้งนี้ <span class="text-zinc-400 font-normal text-sm">(ไม่บังคับ)</span>
+                        </label>
+                        <textarea id="impression" rows="3" placeholder="พิมพ์ความคิดเห็นของท่านที่นี่..."
+                            class="w-full bg-zinc-50/70 border border-zinc-200 rounded-xl p-3.5 text-zinc-900 placeholder-zinc-400 focus:bg-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/40 transition"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="suggestion" class="block text-base font-semibold text-zinc-800 mb-2">
+                            2. ข้อเสนอแนะเพื่อการปรับปรุงและพัฒนาในครั้งต่อไป <span class="text-zinc-400 font-normal text-sm">(ไม่บังคับ)</span>
+                        </label>
+                        <textarea id="suggestion" rows="3" placeholder="พิมพ์ข้อเสนอแนะของท่านที่นี่..."
+                            class="w-full bg-zinc-50/70 border border-zinc-200 rounded-xl p-3.5 text-zinc-900 placeholder-zinc-400 focus:bg-white focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/40 transition"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ปุ่มส่งแบบประเมิน -->
+            <div class="pt-2 pb-10">
+                <button type="submit" id="submitBtn"
+                    class="w-full bg-yellow-400 hover:bg-yellow-500 text-zinc-950 font-bold text-lg py-4 px-6 rounded-2xl shadow-lg shadow-yellow-400/30 border border-yellow-500/50 transition-all transform active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer">
+                    <span>ส่งแบบประเมินความพึงพอใจ</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // ==========================================
+        // ใส่ URL ของ Google Apps Script Web App ที่นี่
+        // ==========================================
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxJK2AtmqVVrWLCEYt6B8E03p3ve-BneIdDPZSIjLn2A7sXdrZhPa0zjrWxlxl9uvfNg/exec";
+
+        const surveySections = [
+            {
+                title: "1. ด้านกระบวนการและขั้นตอนการดำเนินงาน",
+                items: [
+                    { id: "q1_1", text: "การประชาสัมพันธ์กำหนดการและช่องทางการเข้าร่วมประชุม" },
+                    { id: "q1_2", text: "ความสะดวกรวดเร็วในการลงทะเบียนเข้าร่วมประชุม" }
+                ]
+            },
+            {
+                title: "2. ด้านเนื้อหาและสาระสำคัญในการประชุม",
+                items: [
+                    { id: "q2_1", text: "การชี้แจงนโยบาย แนวทางการจัดการศึกษา และระเบียบของโรงเรียน" },
+                    { id: "q2_2", text: "การรายงานผลการเรียน พฤติกรรม และการพัฒนาการของนักเรียน" },
+                    { id: "q2_3", text: "ความชัดเจนในการสื่อสารและตอบข้อซักถามของคณะครู" }
+                ]
+            },
+            {
+                title: "3. ด้านสถานที่ เวลา และการอำนวยความสะดวก",
+                items: [
+                    { id: "q3_1", text: "ความเหมาะสมของสถานที่ ความสะอาด และการจัดเตรียมห้องประชุม" },
+                    { id: "q3_2", text: "ความเหมาะสมของระยะเวลาและกำหนดการในการประชุม" }
+                ]
+            },
+            {
+                title: "4. ภาพรวมและความพึงพอใจโดยภาพรวม",
+                items: [
+                    { id: "q4_1", text: "ความคุ้มค่าและประโยชน์ที่ได้รับจากการเข้าร่วมประชุมในครั้งนี้" }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('questionsContainer');
+        surveySections.forEach(section => {
+            let sectionHTML = `
+                <div class="bg-amber-50/40 p-5 rounded-xl border border-amber-200/70">
+                    <h3 class="text-amber-900 font-bold text-base sm:text-lg mb-4 flex items-center gap-2">
+                        <span class="w-2 h-5 bg-yellow-400 rounded-full inline-block"></span>
+                        ${section.title}
+                    </h3>
+                    <div class="space-y-5">
+            `;
+
+            section.items.forEach(item => {
+                sectionHTML += `
+                    <div class="pb-4 border-b border-amber-200/50 last:border-b-0 last:pb-0">
+                        <p class="text-zinc-800 font-medium text-sm sm:text-base mb-3">${item.text} <span class="text-red-600">*</span></p>
+                        <div class="grid grid-cols-5 gap-2 sm:gap-4 max-w-md">
+                            ${[5, 4, 3, 2, 1].map(score => `
+                                <div>
+                                    <input type="radio" name="${item.id}" id="${item.id}_${score}" value="${score}" class="hidden rating-radio" required>
+                                    <label for="${item.id}_${score}" class="flex flex-col items-center justify-center py-2 rounded-xl border border-zinc-300 bg-white text-zinc-700 cursor-pointer transition-all hover:border-yellow-400 hover:bg-amber-50">
+                                        <span class="text-base sm:text-lg font-semibold leading-tight">${score}</span>
+                                        <span class="text-[10px] opacity-75 font-normal">
+                                            ${score === 5 ? 'มากที่สุด' : score === 1 ? 'น้อยที่สุด' : '&nbsp;'}
+                                        </span>
+                                    </label>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            sectionHTML += `</div></div>`;
+            container.innerHTML += sectionHTML;
+        });
+
+        function toggleOtherInput(show) {
+            const container = document.getElementById('otherStatusContainer');
+            const input = document.getElementById('otherStatusInput');
+            if (show) {
+                container.classList.remove('hidden');
+                input.required = true;
+                input.focus();
+            } else {
+                container.classList.add('hidden');
+                input.required = false;
+                input.value = '';
+            }
+        }
+
+        document.getElementById('evaluationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (SCRIPT_URL === "YOUR_GOOGLE_SCRIPT_WEB_APP_URL" || !SCRIPT_URL) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ยังไม่ได้ตั้งค่า URL',
+                    text: 'กรุณานำ URL ของ Google Apps Script มาใส่ในตัวแปร SCRIPT_URL ก่อนใช้งาน',
+                    background: '#ffffff',
+                    color: '#18181b',
+                    confirmButtonColor: '#facc15',
+                    confirmButtonText: '<span style="color:#000; font-weight:bold;">ตกลง</span>'
+                });
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span class="animate-pulse">กำลังบันทึกข้อมูล...</span>`;
+
+            const formData = new FormData(this);
+            const payload = {
+                status: formData.get('status'),
+                otherStatus: document.getElementById('otherStatusInput').value,
+                grade: formData.get('grade'),
+                q1_1: formData.get('q1_1'),
+                q1_2: formData.get('q1_2'),
+                q2_1: formData.get('q2_1'),
+                q2_2: formData.get('q2_2'),
+                q2_3: formData.get('q2_3'),
+                q3_1: formData.get('q3_1'),
+                q3_2: formData.get('q3_2'),
+                q4_1: formData.get('q4_1'),
+                impression: document.getElementById('impression').value,
+                suggestion: document.getElementById('suggestion').value
+            };
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'บันทึกข้อมูลสำเร็จ!',
+                    text: 'ขอขอบคุณที่สละเวลาทำแบบประเมินความพึงพอใจ',
+                    background: '#ffffff',
+                    color: '#18181b',
+                    confirmButtonColor: '#facc15',
+                    confirmButtonText: '<span style="color:#000; font-weight:bold;">ตกลง</span>'
+                });
+                document.getElementById('evaluationForm').reset();
+                toggleOtherInput(false);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'เกิดข้อผิดพลาด',
+                    text: 'ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+                    background: '#ffffff',
+                    color: '#18181b',
+                    confirmButtonColor: '#facc15',
+                    confirmButtonText: '<span style="color:#000; font-weight:bold;">ตกลง</span>'
+                });
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            });
+        });
+    </script>
+</body>
+</html>
